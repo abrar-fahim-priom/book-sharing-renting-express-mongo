@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Alo Ghor - User Profile Details</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
+
+    <div id="header-wrap">
+
+        <div class="top-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="social-links">
+                            <ul>
+                                <li>
+                                    <a href="user_details.html" class="user-account for-buy">
+                                        <i class="icon icon-user"></i>
+                                        <span id="current-user" class="btn-secondary rounded-pill btn">Account</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="user_details.html" class="cart for-buy"><i class="icon icon-clipboard"></i>
+                                        <span class="rounded-pill btn btn-warning ">Reedem
+                                            Points: <span id="current-user-point">0</span>
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="left-element d-flex">
+                            <div class="action-menu col-md-6">
+
+                            </div>
+                            <div class="mx-5  d-flex align-items-end justify-content-end ">
+                                <a id="logout" onclick="deleteAuthTokenCookie()"
+                                    class=" btn btn-danger  rounded-pill m-0" target="_blank">Logout</a>
+                            </div>
+                        </div><!--top-right-->
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!--top-content-->
+
+        <header id="header">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <div class="main-logo">
+                            <a href="index.html"><img src="images/main-logo.png" alt="logo"></a>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-10">
+
+                        <nav id="navbar">
+                            <div class="main-menu stellarnav">
+                                <ul class="menu-list">
+                                    <li class="menu-item mx-5 ">
+                                        <h2 class="btn fw-bold  btn-secondary rounded-4 ">USER DETAILS</h2>
+                                    </li>
+                                    <li class="menu-item active"><a href="#index.html">Home</a></li>
+                                    <li class="menu-item has-sub">
+                                        <a href="#pages" class="nav-link">Pages</a>
+
+                                        <ul>
+
+                                            <li class="active"><a href="index.html">Home</a></li>
+                                            <li><a href="user_details.html">User Details </a>
+                                            </li>
+                                            <li><a href="adminControl.html">Admin Control</a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+
+                                    <li class="menu-item"><a href="#popular-books" class="nav-link">Books</a></li>
+
+                                    <li class="menu-item">
+                                        <a href="adminControl.html" class="nav-link btn btn-danger  rounded-pill m-0"
+                                            target="_blank">Admin
+                                            Control</a>
+                                    </li>
+                                </ul>
+
+                                <div class="hamburger">
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                    <span class="bar"></span>
+                                </div>
+
+                            </div>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+    </div><!--header-wrap-->
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 center-content">
+                <h2>User Details</h2>
+                <div id="userDetails" class="text-left">
+                    <!-- User details will be populated dynamically using JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <section id="popular-books" class="bookshelf py-5 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header align-center">
+                        <div class="title">
+                            <span>User Rented Books</span>
+                        </div>
+                        <h2 class="section-title">Previously Rented Books</h2>
+                    </div>
+                    <div class="tab-content">
+                        <div id="all-genre" data-tab-content class="active">
+                            <div id="book-loops" class="row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/Carousel.js"></script>
+    <!-- <script src="js/loggedInUserFront.js"></script> -->
+
+    <script>
+        function deleteAuthTokenCookie() {
+            fetch('http://localhost:8080/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include', // Include credentials (cookies) in the request
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('auth_token cookie cleared');
+                        // Wait for half a second (500 milliseconds) and then redirect
+                        setTimeout(function () {
+                            window.location.href = '/views/register_login.html';
+                        }, 500);
+                    } else {
+                        alert('Failed to clear auth_token cookie');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch data from the API endpoint
+            fetch('http://localhost:8080/api/auth/logged-user', {
+                method: "GET",
+                credentials: "include",
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    const excludedKeys = ['__v', 'createdAt','rentedBooks', 'updatedAt'];
+
+
+                    const keyMappings = {
+                        _id: 'User ID',
+                        name: 'Name',
+                        email: 'Email',
+                        redeemPoints: 'Redeem Points',
+                        isAdmin: 'Admin',
+                        // Add more mappings as needed
+                    };
+
+                    // Populate the user details dynamically
+                    const userDetailsContainer = document.getElementById('userDetails');
+
+                    for (const [key, value] of Object.entries(data.user)) {
+                        // Check if the key should be excluded
+                        if (!excludedKeys.includes(key)) {
+                            const customKey = keyMappings[key] || key; // Use custom key name if available, otherwise use the original key
+                            const formattedValue = key === 'isAdmin' ? (value ? 'Yes' : 'No') : value; // Format isAdmin value
+                            const detailElement = document.createElement('div');
+                            detailElement.innerHTML = `<h3><strong>${customKey}:</strong> ${formattedValue}</h3>`;
+                            userDetailsContainer.appendChild(detailElement);
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+
+
+    <script>
+        //fetching user info for headline details
+        async function fetchUserInfo() {
+            try {
+                const response = await fetch("http://localhost:8080/api/auth/logged-user", {
+                    method: "GET",
+                    credentials: "include",
+                });
+                const data = await response.json();
+                return data.user;
+            } catch (error) {
+                console.error("Error fetching user information:", error);
+            }
+        }
+
+        async function updateUserInformation() {
+            const user = await fetchUserInfo();
+
+            if (!user) {
+                return;
+            }
+
+            // Update user name
+            const currentUserElement = document.getElementById("current-user");
+            if (currentUserElement) {
+                currentUserElement.textContent = user.name;
+            }
+
+            // Update redeem points
+            const currentUserPointElement = document.getElementById("current-user-point");
+            if (currentUserPointElement) {
+                currentUserPointElement.textContent = user.redeemPoints;
+            }
+        }
+
+        //fucntion to show rented books
+
+        async function populateBooks() {
+            const datas = await fetchUserInfo();
+            const books = datas.rentedBooks;
+
+            if (!books) {
+                return;
+            }
+            var bookContainer = document.getElementById("book-loops");
+
+            books.forEach(function (book) {
+                var bookItem = document.createElement("div");
+                bookItem.className = "col-md-3 product-item";
+                bookItem.innerHTML = `
+                        <div class="col-md-6">
+                        <figure class="product-style">
+                            <img src="images/tab-item1.jpg" alt="Books" class="product-item">
+                            <button type="button" class="add-to-cart" id="viewDesc" data-product-tile="add-to-cart">View Description</button>
+                        </figure>
+                        <figcaption>
+                            <h3 id="book-title">${book.title}</h3>
+                            <p id="book-author">${book.author}</p>
+                            <h5><div id="book-pages" class="item-price">${book.numberOfPage} Pages</div></h5>
+                            <p id="book-duration">${book.durationForRenting} Days</p>
+                        </figcaption>
+                        </div>
+                        <div class="bold col-md-6">
+                            <p id="book-desc">${book.description} </p>
+                        </div>
+                    `;
+                bookContainer.appendChild(bookItem);
+            });
+        }
+
+
+
+
+        window.onload = function () {
+            updateUserInformation();
+            populateBooks();
+            // showDesc();
+        };
+    </script>
+
+
+
+
+</body>
+
+</html>

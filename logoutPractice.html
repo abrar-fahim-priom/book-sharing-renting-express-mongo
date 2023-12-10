@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Example</title>
+</head>
+<body>
+
+    <h1>Logout Example</h1>
+
+    <button id="logout">Logout</button>
+
+    <script>
+        async function logout() {
+            try {
+                const response = await fetch("http://localhost:8080/api/auth/logout", {
+                    method: "GET",
+                    credentials: 'include',
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log(data.success);
+                } else {
+                    console.error("Logout failed:", data.message);
+                }
+            } catch (error) {
+                console.error("Error during logout:", error);
+            }
+        }
+
+        document.getElementById("logout").addEventListener("click", logout);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./src/styles/style.css">
+</head>
+
+<body>
+    <h2 class="text-center mt-2 "> Update A Book Information</h2>
+    <form id="bookForm" class="container">
+        <h3> Book ID</h3>
+        <input type="text" id="id" name="title" placeholder="Title" class="form-control mb-5 " required>
+
+        <h3> Title</h3>
+        <input type="text" id="title" name="title" placeholder="Title" class="form-control mb-5 " required>
+
+        <h3> Author</h3>
+        <input type="text" id="author" name="author" placeholder="Author" class="form-control mb-3" required>
+
+        <h3> Number of Pages</h3>
+        <input type="text" id="numberOfPage" name="numberOfPage" placeholder="Number of Pages" class="form-control mb-3"
+            required>
+
+        <h3> Duration for renting</h3>
+        <input type="text" id="durationForRenting" name="durationForRenting" placeholder="Duration for Renting"
+            class="form-control mb-3" required>
+
+        <h3> Description for renting</h3>
+        <input type="text" id="description" name="description" placeholder="Description" class="form-control mb-3"
+            required>
+
+        <div class="">
+            <button type="button" style="margin-top: 20px;" class="btn btn-info  mt-5 pt-5 "
+                onclick="submitForm()">Submit</button>
+        </div>
+
+    </form>
+
+    <script>
+        // Assume bookDetails is the JavaScript object containing the book details
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const encodedBookDetails = urlParams.get('bookDetails');
+        const bookDetails = JSON.parse(decodeURIComponent(encodedBookDetails));
+
+
+        document.getElementById('id').disabled = true;
+        // Fill up the form fields with the retrieved information
+        document.getElementById('id').value = bookDetails._id;
+        document.getElementById('title').value = bookDetails.title;
+        document.getElementById('author').value = bookDetails.author;
+        document.getElementById('numberOfPage').value = bookDetails.numberOfPage;
+        document.getElementById('durationForRenting').value = bookDetails.durationForRenting;
+        document.getElementById('description').value = bookDetails.description;
+
+        function submitForm() {
+            var id = document.getElementById('id').value;
+            var title = document.getElementById('title').value;
+            var author = document.getElementById('author').value;
+            var numberOfPage = document.getElementById('numberOfPage').value;
+            var durationForRenting = document.getElementById('durationForRenting').value;
+            var description = document.getElementById('description').value;
+
+            var url = `http://localhost:8080/api/books/${id}`;
+
+            // Create a data object with the values to be sent in the request body
+            var data = {
+                title: title,
+                author: author,
+                numberOfPage: numberOfPage,
+                durationForRenting: durationForRenting,
+                description: description
+            };
+
+            // Perform the PUT request
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                credentials: 'include', // Include credentials in the request
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Fetching error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Form submitted successfully!');
+                    setTimeout(function () {
+                        window.location.href = 'index.html';
+                    }, 500);
+                })
+                .catch(error => {
+                    alert('There was an error!', error);
+                    // Handle errors here
+                });
+        }
+
+    </script>
+</body>
+
+</html>

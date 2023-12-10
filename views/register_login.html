@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../src/styles/style.css">
+</head>
+
+<body>
+    <div class="form-modal">
+
+        <div class="form-toggle">
+            <button id="login-toggle" onclick="toggleLogin()">log in</button>
+            <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+        </div>
+
+        <div id="login-form">
+            <form>
+                <input type="text" id="login-email" placeholder="Enter email or username" />
+                <input type="password" id="login-password" placeholder="Enter password" />
+                <button type="button" class="btn login" onclick="login()">login</button>
+                <hr />
+            </form>
+            <p id="alert_login"></p>
+        </div>
+
+        <div id="signup-form">
+            <form>
+                <input type="name" id="name" placeholder="Choose Name" />
+                <input type="email" id="email" placeholder="Enter your email" />
+                <input type="password" id="password" placeholder="Create password" />
+
+                <label for="adminCheckbox" style="display: flex; align-items: center; justify-content: center;"
+                    id="admin"> <strong> Admin :</strong> </label>
+                <input type="checkbox" style="display: flex; justify-content: left; " id="adminCheck" name="admin"
+                    value="true">
+
+                <button type="button" class="btn signup" onclick="signup()">create account</button>
+                <p id="alert"></p>
+                <hr />
+            </form>
+        </div>
+
+
+    </div>
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast-notification">
+        <div class="toast-header">
+          <strong class="mr-auto">Notification</strong>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          <!-- Toast message will be inserted here -->
+        </div>
+       </div>
+       
+
+    <script>
+        function toggleSignup() {
+            document.getElementById("login-toggle").style.backgroundColor = "#fff";
+            document.getElementById("login-toggle").style.color = "#222";
+            document.getElementById("signup-toggle").style.backgroundColor = "#57b846";
+            document.getElementById("signup-toggle").style.color = "#fff";
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("signup-form").style.display = "block";
+            resetForm('signup-form');
+        }
+
+        function toggleLogin() {
+            document.getElementById("login-toggle").style.backgroundColor = "#57B846";
+            document.getElementById("login-toggle").style.color = "#fff";
+            document.getElementById("signup-toggle").style.backgroundColor = "#fff";
+            document.getElementById("signup-toggle").style.color = "#222";
+            document.getElementById("signup-form").style.display = "none";
+            document.getElementById("login-form").style.display = "block";
+            resetForm('login-form');
+        }
+
+        function resetForm(formId) {
+            var form = document.getElementById(formId).querySelector('form');
+            form.reset();
+        }
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('.signup').addEventListener('click', function () {
+                // Get form values
+                var name = encodeURIComponent(document.getElementById("name").value);
+                var email = encodeURIComponent(document.getElementById("email").value);
+                var password = encodeURIComponent(document.getElementById("password").value);
+
+                // Check if the checkbox is checked
+                var isAdmin = document.getElementById("adminCheck").checked;
+
+                // Include isAdmin in the data object
+                var data = `name=${name}&email=${email}&password=${password}&isAdmin=${isAdmin}`;
+
+                fetch('http://localhost:8080/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                        
+                    },
+                    body: data
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById("alert").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                            resetForm('signup-form');
+                        } else {
+                            document.getElementById("alert").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+
+    </script>
+    <script>
+        function login() {
+            var email = encodeURIComponent(document.getElementById("login-email").value);
+            var password = encodeURIComponent(document.getElementById("login-password").value);
+    
+            var data = `email=${email}&password=${password}`;
+    
+            fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'include',
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("alert_login").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                    resetForm('login-form');
+    
+                    // Redirect after 500 milliseconds (0.5 seconds)
+                    setTimeout(function() {
+                       window.location.href = '../index.html';
+                    }, 500);
+                } else {
+                    document.getElementById("alert_login").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    
+
+</body>
+
+</html>
